@@ -3,23 +3,24 @@
 
 const int WIDTH = 800, HEIGHT = 600;
 
-int main( int argc, char *argv[] )
-{
+int main(int argc, char *argv[]) {
+
     SDL_Init(SDL_INIT_EVERYTHING);
 
     SDL_Window *window = SDL_CreateWindow("Game", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, WIDTH, HEIGHT, SDL_WINDOW_ALLOW_HIGHDPI);
-    if (NULL == window)
-    {
+    if (nullptr == window) {
         std::cout << "Could not create window: " << SDL_GetError() << std::endl;
     }
 
+    SDL_Renderer *renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
+    if (nullptr == renderer) {
+        std::cout << "Could not create renderer: " << SDL_GetError() << std::endl;
+    }
+
     SDL_Event windowEvent;
-    while(true)
-    {
-        if (SDL_PollEvent(&windowEvent))
-        {
-            if (SDL_QUIT == windowEvent.type)
-            {
+    while(true) {
+        if (SDL_PollEvent(&windowEvent)) {
+            if (SDL_QUIT == windowEvent.type) {
                 break;
             }
         }
