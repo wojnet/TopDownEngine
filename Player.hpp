@@ -7,7 +7,7 @@
 class Player {
 
 public:
-    Player();
+    Player(float _x, float _y, int _w, int _h);
     ~Player();
 
     void update();

@@ -1,11 +1,14 @@
 #include <iostream>
 #include <SDL2/SDL.h>
+#include "Player.cpp"
 
 const int WIDTH = 800, HEIGHT = 600;
 
 SDL_Window *window;
 SDL_Renderer *renderer;
 SDL_Event windowEvent;
+
+Player player(64, 64, 64, 64);
 
 bool isRunning = true;
 

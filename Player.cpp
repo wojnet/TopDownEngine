@@ -1,7 +1,7 @@
 #include "Player.hpp"
 
-Player::Player() {
-    
+Player::Player(float _x, float _y, int _w, int _h) {
+    // this->renderer = renderer;
 }
 
 Player::~Player() {
