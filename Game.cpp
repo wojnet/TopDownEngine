@@ -1,4 +1,8 @@
 #include "Game.h"
+#include "Player.h"
+
+Player *player = 0;
+bool up, left, down, right = false;
 
 Game::Game(){};
 
@@ -12,30 +16,70 @@ void Game::init(const char* title, int x, int y, int w, int h, Uint32 flags) {
 
     renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
     if (NULL == renderer) std::cout << "Could not create renderer: " << SDL_GetError() << std::endl;
+
+    player = new Player(renderer);
 };
 
 void Game::input() {
     if (SDL_PollEvent(&event)) {
-        if (SDL_QUIT == event.type) {
-            running = false;
+        switch(event.type) {
+
+            case SDL_QUIT:
+                running = false;
+                break;
+
+            case SDL_KEYDOWN:
+                switch(event.key.keysym.sym) {
+                    case 119:
+                        up = 1;
+                        break;
+
+                    case 97:
+                        left = 1;
+                        break;
+
+                    case 115:
+                        down = 1;
+                        break;
+
+                    case 100:
+                        right = 1;
+                        break;
+                }
+                break;
+
+            case SDL_KEYUP:
+                switch(event.key.keysym.sym) {
+                    case 119:
+                        up = 0;
+                        break;
+
+                    case 97:
+                        left = 0;
+                        break;
+
+                    case 115:
+                        down = 0;
+                        break;
+
+                    case 100:
+                        right = 0;
+                        break;
+                }
+                break;       
         }
     }
-
 };
 
 void Game::update() {
-    rect.x = 64;
-    rect.y = 64;
-    rect.w = 64;    
-    rect.h = 64;
+    player->update(up, left, down, right);
 };
 
 void Game::draw() {
     SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
     SDL_RenderClear(renderer);
 
-    SDL_SetRenderDrawColor(renderer, 255, 0, 0, 255);
-    SDL_RenderFillRect(renderer, &rect);
+    player->draw();
 
     SDL_RenderPresent(renderer);
 };
@@ -44,6 +88,3 @@ void Game::clean() {
     SDL_DestroyWindow(window);
     SDL_Quit();
 };
-
-
-// const char* title, int xpos, int ypos, int width, int height, int flags
