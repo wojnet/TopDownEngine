@@ -1,49 +1,24 @@
 #include <iostream>
 #include <SDL2/SDL.h>
-// #include "Game.cpp"
+#include "Game.h"
 
 const int WIDTH = 800, HEIGHT = 600;
-
-SDL_Window *window;
-SDL_Renderer *renderer;
-SDL_Event windowEvent;
-
-bool isRunning = true;
-
-// void input() {
-//     if (SDL_PollEvent(&windowEvent)) {
-//         if (SDL_QUIT == windowEvent.type) {
-//             isRunning = false;
-//         }
-//     }
-// }
-
-// void update() {
-    
-// }
-
-// void draw() {
-//     SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
-//     SDL_RenderClear(renderer);
-//     SDL_RenderPresent(renderer);
-// }
-
-game* = new Game();
+Game* game;
 
 int main(int argc, char *argv[]) {
 
-    game->init("Game", 0, 0, 800, 600, 0);
+    game = new Game();
+    game->init("Game", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, WIDTH, HEIGHT, SDL_WINDOW_ALLOW_HIGHDPI);
 
-    while (isRunning) {
+    while (game->isRunning()) {
 
-        // input();
-        // update();
-        // draw();
+        game->input();
+        game->update();
+        game->draw();
 
     }
 
-    SDL_DestroyWindow(window);
-    SDL_Quit();
+    game->clean();
 
     return EXIT_SUCCESS;
 }
